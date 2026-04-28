@@ -6,13 +6,20 @@
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
-        .feedback-box { max-width: 600px; margin: 30px auto; background: #fff; padding: 40px; border-radius: 20px; box-shadow: var(--shadow); }
+        .feedback-container { max-width: 700px; margin: 0 auto; }
+        .form-card { background: #fff; padding: 30px; border-radius: 15px; box-shadow: var(--shadow); margin-bottom: 40px; }
         .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 10px; font-weight: bold; color: #333; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 10px; background: #f9f9f9; outline: none;
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #333; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 8px; background: #fcfcfc;
         }
-        .form-group textarea { height: 150px; resize: none; }
+        /* 模拟留言列表样式 */
+        .msg-list { background: #fff; padding: 30px; border-radius: 15px; box-shadow: var(--shadow); }
+        .msg-item { padding: 15px 0; border-bottom: 1px dashed #eee; }
+        .msg-item:last-child { border-bottom: none; }
+        .msg-user { color: var(--primary-color); font-weight: bold; font-size: 15px; }
+        .msg-time { float: right; color: #bbb; font-size: 12px; }
+        .msg-text { margin-top: 8px; color: #666; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -24,38 +31,54 @@
                 <li><a href="../index.html">首页</a></li>
                 <li><a href="category.html">分类</a></li>
                 <li><a href="news.html">资讯</a></li>
-                <li><a href="links.html">常用链接</a></li>
+                <li><a href="favorites.html">收藏</a></li>
                 <li><a href="feedback.html" class="active">反馈</a></li>
+                <li><a href="contact.html">联系</a></li>
                 <li><a href="about.html">关于</a></li>
                 <li><a href="login.html" style="color:#ff4757">登录</a></li>
             </ul>
         </nav>
 
-        <main class="container">
-            <h2 class="section-title">您的反馈是我们进步的动力</h2>
+        <main class="container feedback-container">
+            <h2 class="section-title">您的建议，我们的动力</h2>
             
-            <div class="feedback-box">
+            <!-- 反馈表单 -->
+            <div class="form-card">
                 <div class="form-group">
-                    <label>您的称呼</label>
-                    <input type="text" v-model="username" placeholder="请输入您的昵称">
+                    <label>您的昵称</label>
+                    <input type="text" v-model="name" placeholder="请输入您的称呼">
                 </div>
                 <div class="form-group">
-                    <label>给网站打个分吧</label>
-                    <select v-model="rating">
-                        <option value="5">⭐⭐⭐⭐⭐ 非常满意</option>
-                        <option value="4">⭐⭐⭐⭐ 比较满意</option>
-                        <option value="3">⭐⭐⭐ 一般</option>
-                        <option value="2">⭐⭐ 不太满意</option>
-                    </select>
+                    <label>留言内容</label>
+                    <textarea v-model="msg" placeholder="请写下您对本站的建议..."></textarea>
                 </div>
-                <div class="form-group">
-                    <label>详细意见</label>
-                    <textarea v-model="message" placeholder="请写下您宝贵的建议..."></textarea>
-                </div>
-                <!-- 点击提交后跳转到新页面 -->
-                <button class="submit-btn" @click="handleSubmit" style="width:100%; padding:15px; background:#ff4757; color:#fff; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">
-                    提交反馈并查看留言板
+                <button class="fav-btn" @click="submit" style="width:100%; padding:14px; background:#ff4757; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">
+                    提交反馈
                 </button>
+            </div>
+
+            <!-- 近期留言列表 (满足老师要求的“浏览留言”功能) -->
+            <div class="msg-list">
+                <h3 style="margin-bottom: 20px; border-left: 4px solid #ff4757; padding-left: 15px;">近期留言</h3>
+                
+                <!-- 如果用户提交了新留言，显示在最前面 -->
+                <div class="msg-item" v-if="submitted">
+                    <div class="msg-user">用户：{{ name || '您' }} <span class="msg-time">刚刚</span></div>
+                    <div class="msg-text" style="color: #ff4757;">{{ msg }} (您的留言已提交成功，审核中...)</div>
+                </div>
+
+                <div class="msg-item">
+                    <div class="msg-user">用户：美食达人A <span class="msg-time">1小时前</span></div>
+                    <div class="msg-text">网站的响应速度很快，甜品图片拍得太诱人了！</div>
+                </div>
+                <div class="msg-item">
+                    <div class="msg-user">用户：厨房小白 <span class="msg-time">3小时前</span></div>
+                    <div class="msg-text">跟着教程做了红烧肉，全家都夸好吃，感谢分享。</div>
+                </div>
+                <div class="msg-item">
+                    <div class="msg-user">用户：匿名访客 <span class="msg-time">昨天</span></div>
+                    <div class="msg-text">建议多加一些关于食材选购的小技巧。</div>
+                </div>
             </div>
         </main>
     </div>
@@ -65,21 +88,17 @@
         createApp({
             data() {
                 return {
-                    username: '',
-                    rating: '5',
-                    message: ''
+                    name: '',
+                    msg: '',
+                    submitted: false
                 }
             },
             methods: {
-                handleSubmit() {
-                    if (!this.username || !this.message) {
-                        alert('请完整填写信息后再提交哦！');
-                        return;
-                    }
-                    // 模拟提交过程
-                    alert('感谢您的反馈！点击确定查看留言列表。');
-                    // 跳转到留言展示页 (msg_list.html)
-                    window.location.href = 'msg_list.html';
+                submit() {
+                    if(!this.name || !this.msg) return alert('请先填写昵称和内容哦！');
+                    alert('感谢您的宝贵建议！');
+                    this.submitted = true;
+                    // 这里不跳转，只在页面上显示“已提交”状态
                 }
             }
         }).mount('#app')
