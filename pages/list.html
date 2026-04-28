@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>留言板 - 美食天下</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .msg-card { background: #fff; padding: 25px; border-radius: 15px; margin-bottom: 20px; border-left: 5px solid #ff4757; box-shadow: var(--shadow); }
+        .msg-header { display: flex; justify-content: space-between; margin-bottom: 10px; color: #888; font-size: 14px; }
+        .msg-user { color: #333; font-weight: bold; font-size: 16px; }
+        .msg-content { color: #555; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">美食天下</div>
+        <ul class="nav-links">
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="category.html">分类</a></li>
+            <li><a href="feedback.html">返回反馈</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <h2 class="section-title">最新留言展示</h2>
+        <p style="text-align:center; color:#999; margin-top:-30px; margin-bottom:40px;">这里记录了每一位食客对我们的期许</p>
+
+        <!-- 模拟留言列表 -->
+        <div class="msg-card">
+            <div class="msg-header">
+                <span class="msg-user">用户：Olivia777</span>
+                <span>2026-04-28 14:30</span>
+            </div>
+            <div class="msg-content">这个网站的甜品分类太棒了！我已经成功做出了提拉米苏。</div>
+        </div>
+
+        <div class="msg-card">
+            <div class="msg-header">
+                <span class="msg-user">用户：小食神</span>
+                <span>2026-04-28 10:15</span>
+            </div>
+            <div class="msg-content">希望能增加更多关于家常小炒的视频教程，支持支持！</div>
+        </div>
+
+        <div class="msg-card">
+            <div class="msg-header">
+                <span class="msg-user">用户：匿名访客</span>
+                <span>2026-04-27 18:20</span>
+            </div>
+            <div class="msg-content">UI设计得很漂亮，尤其是那个红色主题，非常有食欲。</div>
+        </div>
+
+        <div class="msg-card" style="background: #fff1f2; border-style: dashed; border-width: 1px;">
+            <p style="text-align: center; color: #ff4757; font-weight: bold;">您的留言已提交成功，正在排队审核中...</p>
+        </div>
+    </main>
+
+    <footer>© 2026 美食天下留言板 - 分享美味的快乐</footer>
+</body>
+</html>

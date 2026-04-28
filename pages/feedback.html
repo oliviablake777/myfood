@@ -1,32 +1,88 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
-    <title>反馈</title>
+    <title>意见反馈 - 美食天下</title>
     <link rel="stylesheet" href="../css/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        .feedback-box { max-width: 600px; margin: 30px auto; background: #fff; padding: 40px; border-radius: 20px; box-shadow: var(--shadow); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 10px; font-weight: bold; color: #333; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 10px; background: #f9f9f9; outline: none;
+        }
+        .form-group textarea { height: 150px; resize: none; }
+    </style>
 </head>
-
 <body>
-    <nav class="navbar">
-        <div class="logo">美食天下</div>
-        <ul class="nav-links">
-            <li><a href="../index.html">首页</a></li>
-            <li><a href="category.html">分类</a></li>
-            <li><a href="news.html">资讯</a></li>
-            <li><a href="favorites.html">收藏</a></li>
-            <li><a href="feedback.html" class="active">反馈</a></li>
-            <li><a href="contact.html">联系</a></li>
-            <li><a href="about.html">关于</a></li>
-            <li><a href="login.html" style="color:#ff4757">登录</a></li>
-        </ul>
-    </nav>
-    <main class="container" style="max-width:500px">
-        <h2>意见反馈</h2><br>
-        <textarea placeholder="请输入您的建议"
-            style="width:100%; height:150px; padding:10px; border:1px solid #ddd"></textarea>
-        <button class="fav-btn" style="width:100%; padding:10px; margin-top:10px" onclick="alert('感谢反馈！')">提交反馈</button>
-    </main>
-</body>
+    <div id="app">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="logo">美食天下</div>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="category.html">分类</a></li>
+                <li><a href="news.html">资讯</a></li>
+                <li><a href="links.html">常用链接</a></li>
+                <li><a href="feedback.html" class="active">反馈</a></li>
+                <li><a href="about.html">关于</a></li>
+                <li><a href="login.html" style="color:#ff4757">登录</a></li>
+            </ul>
+        </nav>
 
+        <main class="container">
+            <h2 class="section-title">您的反馈是我们进步的动力</h2>
+            
+            <div class="feedback-box">
+                <div class="form-group">
+                    <label>您的称呼</label>
+                    <input type="text" v-model="username" placeholder="请输入您的昵称">
+                </div>
+                <div class="form-group">
+                    <label>给网站打个分吧</label>
+                    <select v-model="rating">
+                        <option value="5">⭐⭐⭐⭐⭐ 非常满意</option>
+                        <option value="4">⭐⭐⭐⭐ 比较满意</option>
+                        <option value="3">⭐⭐⭐ 一般</option>
+                        <option value="2">⭐⭐ 不太满意</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>详细意见</label>
+                    <textarea v-model="message" placeholder="请写下您宝贵的建议..."></textarea>
+                </div>
+                <!-- 点击提交后跳转到新页面 -->
+                <button class="submit-btn" @click="handleSubmit" style="width:100%; padding:15px; background:#ff4757; color:#fff; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">
+                    提交反馈并查看留言板
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    username: '',
+                    rating: '5',
+                    message: ''
+                }
+            },
+            methods: {
+                handleSubmit() {
+                    if (!this.username || !this.message) {
+                        alert('请完整填写信息后再提交哦！');
+                        return;
+                    }
+                    // 模拟提交过程
+                    alert('感谢您的反馈！点击确定查看留言列表。');
+                    // 跳转到留言展示页 (msg_list.html)
+                    window.location.href = 'msg_list.html';
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
 </html>

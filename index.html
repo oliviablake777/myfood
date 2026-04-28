@@ -8,6 +8,7 @@
 </head>
 <body>
     <div id="app">
+        <!-- 导航栏 -->
         <nav class="navbar">
             <div class="logo">美食天下</div>
             <ul class="nav-links">
@@ -18,13 +19,23 @@
                 <li><a href="pages/feedback.html">反馈</a></li>
                 <li><a href="pages/contact.html">联系</a></li>
                 <li><a href="pages/about.html">关于</a></li>
-                <li><a href="pages/login.html" style="color: #ff4757; font-weight: bold;">登录</a></li>
+                <li style="margin-left:15px;"><a href="pages/login.html" style="color:#ff4757; font-weight:bold;">登录</a></li>
             </ul>
         </nav>
 
+        <!-- 课设要求：原生JS编写的时间显示 -->
+        <div id="datetime" style="text-align: right; padding: 10px 8%; background: #fff; font-size: 13px; color: #888; border-bottom: 1px solid #eee;">
+            正在加载时间...
+        </div>
+
+        <!-- 课设要求：滚动公告 -->
+        <div style="background: #fff1f2; color: #ff4757; padding: 8px 8%; font-size: 13px;">
+            <marquee scrollamount="6">📢 欢迎来到美食天下！今日推荐 20 款精选菜谱，点击卡片查看详情，收藏你最爱的味道。</marquee>
+        </div>
+
         <header class="hero">
             <h1>寻味之旅，由此开始</h1>
-            <p>收藏你最喜爱的美味佳肴</p>
+            <p>每一份美食都有它的故事</p>
         </header>
 
         <main class="container">
@@ -32,14 +43,13 @@
             <div class="food-grid">
                 <div class="food-card" v-for="item in foods" :key="item.id">
                     <div class="img-container" @click="go(item.id)">
-                        <img :src="item.image" alt="">
+                        <img :src="item.image" alt="美食">
                         <span class="tag">{{item.category}}</span>
                     </div>
                     <div class="food-info">
-                        <h3 @click="go(item.id)">{{ item.name }}</h3>
+                        <h3 @click="go(item.id)" style="cursor:pointer">{{ item.name }}</h3>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
                             <span class="price">￥{{ item.price }}</span>
-                            <!-- 收藏按钮 -->
                             <button class="fav-btn" @click="toggleFav(item)">
                                 {{ isFav(item.id) ? '❤️ 已收藏' : '🤍 收藏' }}
                             </button>
@@ -48,17 +58,30 @@
                 </div>
             </div>
         </main>
-        <footer>© 2026 美食天下 - 课设</footer>
+
+        <footer>
+            <p>© 2026 美食天下 - 你的姓名</p>
+        </footer>
     </div>
 
     <script src="js/data.js"></script>
     <script>
+        // 时间程序
+        function showTime() {
+            const now = new Date();
+            const weeks = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+            document.getElementById('datetime').innerHTML = "📅 " + now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日 " + weeks[now.getDay()] + " " + now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0') + ":" + now.getSeconds().toString().padStart(2, '0');
+        }
+        setInterval(showTime, 1000);
+        showTime();
+
+        // Vue 逻辑
         const { createApp } = Vue;
         createApp({
             data() {
                 return {
                     foods: foodList,
-                    favIds: JSON.parse(localStorage.getItem('myFavs') || '[]') // 从本地读取已收藏的ID
+                    favIds: JSON.parse(localStorage.getItem('myFavs') || '[]')
                 }
             },
             methods: {
@@ -66,13 +89,8 @@
                 isFav(id) { return this.favIds.includes(id); },
                 toggleFav(item) {
                     let index = this.favIds.indexOf(item.id);
-                    if (index > -1) {
-                        this.favIds.splice(index, 1);
-                    } else {
-                        this.favIds.push(item.id);
-                        alert(`已成功收藏: ${item.name}`);
-                    }
-                    // 保存到浏览器缓存
+                    if (index > -1) { this.favIds.splice(index, 1); } 
+                    else { this.favIds.push(item.id); alert('已收藏！'); }
                     localStorage.setItem('myFavs', JSON.stringify(this.favIds));
                 }
             }
