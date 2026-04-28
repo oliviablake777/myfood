@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>联系我们 - 舌尖上的美味</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* 针对该页面的强力补丁 */
+        .contact-container {
+            display: flex;
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            min-height: 500px;
+            margin-top: 20px;
+        }
+
+        /* 左侧红色区域 */
+        .contact-info-side {
+            flex: 1;
+            background: #ff4757; /* 直接使用红色，确保可见 */
+            color: #ffffff;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .contact-info-side h2 { font-size: 30px; margin-bottom: 20px; color: #fff; }
+        .contact-info-side p { opacity: 0.9; margin-bottom: 40px; }
+
+        .info-detail-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .info-icon {
+            font-size: 24px;
+            margin-right: 20px;
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .info-text h4 { margin-bottom: 5px; color: #fff; }
+        .info-text p { margin-bottom: 0; font-size: 14px; }
+
+        /* 右侧表单区域 */
+        .contact-form-side {
+            flex: 1.5;
+            padding: 50px;
+            background: #ffffff;
+        }
+
+        .form-row { margin-bottom: 25px; }
+        .form-row label { display: block; margin-bottom: 8px; font-weight: bold; color: #333; }
+        .form-row input, .form-row textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            background: #fdfdfd;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-row input:focus, .form-row textarea:focus {
+            border-color: #ff4757;
+            background: #fff;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(255,71,87,0.3);
+        }
+
+        .submit-btn:hover {
+            background: #ff6b81;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 900px) {
+            .contact-container { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">美食天下</div>
+        <ul class="nav-links">
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="category.html">分类</a></li>
+            <li><a href="news.html">资讯</a></li>
+            <li><a href="favorites.html">收藏</a></li>
+            <li><a href="feedback.html">反馈</a></li>
+            <li><a href="contact.html" class="active">联系</a></li>
+            <li><a href="about.html">关于</a></li>
+            <li><a href="login.html" style="color:#ff4757">登录</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <h2 class="section-title">与我们取得联系</h2>
+        
+        <div class="contact-container">
+            <!-- 左侧：联系信息 -->
+            <div class="contact-info-side">
+                <div>
+                    <h2>联系信息</h2>
+                    <p>有任何建议或商务合作意向？欢迎随时通过以下方式联系我们。</p>
+                    
+                    <div class="info-detail-item">
+                        <div class="info-icon">📍</div>
+                        <div class="info-text">
+                            <h4>公司地址</h4>
+                            <p>洛克王国卡洛西亚大陆风眠省</p>
+                        </div>
+                    </div>
+
+                    <div class="info-detail-item">
+                        <div class="info-icon">📞</div>
+                        <div class="info-text">
+                            <h4>联系电话</h4>
+                            <p>400-888-6666 (周一至周五 9:00-18:00)</p>
+                        </div>
+                    </div>
+
+                    <div class="info-detail-item">
+                        <div class="info-icon">✉️</div>
+                        <div class="info-text">
+                            <h4>电子邮箱</h4>
+                            <p>mossking.com</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="font-size: 24px; letter-spacing: 15px;">
+                    <span>📱</span> <span>💬</span> <span>📸</span>
+                </div>
+            </div>
+
+            <!-- 右侧：表单 -->
+            <div class="contact-form-side">
+                <div class="form-row">
+                    <label>您的姓名</label>
+                    <input type="text" placeholder="怎么称呼您？">
+                </div>
+                <div class="form-row">
+                    <label>电子邮箱</label>
+                    <input type="email" placeholder="方便我们回复您的邮箱">
+                </div>
+                <div class="form-row">
+                    <label>留言内容</label>
+                    <textarea rows="6" placeholder="请写下您想对我们说的话..."></textarea>
+                </div>
+                <button class="submit-btn" onclick="alert('发送成功！我们会尽快回复。')">发送留言</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>© 2026 美食天下 - 诚邀您的建议</footer>
+</body>
+</html>

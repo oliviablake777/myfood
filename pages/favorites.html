@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>我的收藏 - 美食天下</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar">
+            <div class="logo">美食天下</div>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="category.html">分类</a></li>
+                <li><a href="news.html">资讯</a></li>
+                <li><a href="favorites.html" class="active">收藏</a></li>
+                <li><a href="feedback.html">反馈</a></li>
+                <li><a href="contact.html">联系</a></li>
+                <li><a href="about.html">关于</a></li>
+                <li><a href="login.html" style="color: #ff4757; font-weight: bold;">登录</a></li>
+            </ul>
+        </nav>
+
+        <main class="container">
+            <h2 class="section-title">我的私藏清单</h2>
+            
+            <!-- 如果有收藏内容则显示 -->
+            <div class="food-grid" v-if="favFoods.length > 0">
+                <div class="food-card" v-for="item in favFoods" :key="item.id">
+                    <div class="img-container">
+                        <img :src="'../' + item.image" alt="">
+                    </div>
+                    <div class="food-info">
+                        <h3>{{ item.name }}</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                            <span class="price">￥{{ item.price }}</span>
+                            <button class="fav-btn" @click="removeFav(item.id)" style="background: #ccc; box-shadow: none;">移除</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 如果没有收藏则显示提示 -->
+            <div v-else style="text-align: center; padding: 100px 0;">
+                <p style="font-size: 40px;">🛒</p>
+                <p style="color: #999; margin-top: 20px;">收藏夹空空如也，快去首页逛逛吧！</p>
+                <a href="../index.html" class="fav-btn" style="display: inline-block; margin-top: 20px; text-decoration: none;">去首页</a>
+            </div>
+        </main>
+
+        <footer>© 2026 美食天下 - 你的收藏实时同步</footer>
+    </div>
+
+    <script src="../js/data.js"></script>
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    allFoods: foodList,
+                    favIds: JSON.parse(localStorage.getItem('myFavs') || '[]')
+                }
+            },
+            computed: {
+                // 根据 ID 列表从总数据里过滤出收藏的美食
+                favFoods() {
+                    return this.allFoods.filter(f => this.favIds.includes(f.id));
+                }
+            },
+            methods: {
+                removeFav(id) {
+                    this.favIds = this.favIds.filter(item => item !== id);
+                    localStorage.setItem('myFavs', JSON.stringify(this.favIds));
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

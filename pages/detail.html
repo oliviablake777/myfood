@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>美食详情 - 美食天下</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar">
+            <div class="logo">美食天下</div>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="category.html">分类</a></li>
+                <li><a href="favorites.html">收藏</a></li>
+                <li><a href="about.html">关于</a></li>
+            </ul>
+        </nav>
+
+        <main class="container" v-if="f">
+            <div style="background:#fff; padding:40px; border-radius:20px; display:flex; gap:40px; box-shadow: 0 10px 40px rgba(0,0,0,0.05);">
+                <img :src="'../' + f.image" style="width:450px; height:350px; object-fit:cover; border-radius:15px;">
+                <div style="flex:1">
+                    <span class="tag" style="position:static">{{ f.category }}</span>
+                    <h1 style="font-size:36px; margin:15px 0;">{{ f.name }}</h1>
+                    <p style="color:#ff4757; font-size:32px; font-weight:800; margin-bottom:20px;">￥{{ f.price }}</p>
+                    <p style="color:#666; line-height:1.8; margin-bottom:30px;">{{ f.desc }}</p>
+                    
+                    <button class="fav-btn" @click="toggleFav" style="padding: 15px 40px; font-size: 18px;">
+                        {{ isFav ? '❤️ 已在收藏夹' : '🤍 加入收藏' }}
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/data.js"></script>
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    f: null,
+                    favIds: JSON.parse(localStorage.getItem('myFavs') || '[]')
+                }
+            },
+            computed: {
+                isFav() { return this.f && this.favIds.includes(this.f.id); }
+            },
+            created() {
+                const id = new URLSearchParams(window.location.search).get('id');
+                this.f = foodList.find(i => i.id == id);
+            },
+            methods: {
+                toggleFav() {
+                    let index = this.favIds.indexOf(this.f.id);
+                    if (index > -1) {
+                        this.favIds.splice(index, 1);
+                    } else {
+                        this.favIds.push(this.f.id);
+                    }
+                    localStorage.setItem('myFavs', JSON.stringify(this.favIds));
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

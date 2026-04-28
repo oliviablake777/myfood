@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>美食分类 - 智能版</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar">
+            <div class="logo">美食天下</div>
+            <ul class="nav-links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="category.html" class="active">分类</a></li>
+                <li><a href="news.html">资讯</a></li>
+                <li><a href="favorites.html">收藏</a></li>
+                <li><a href="feedback.html">反馈</a></li>
+                <li><a href="contact.html">联系</a></li>
+                <li><a href="about.html">关于</a></li>
+                <li><a href="login.html" style="color:#ff4757">登录</a></li>
+            </ul>
+        </nav>
+
+        <main class="container">
+            <!-- 智能分类按钮区域 -->
+            <div style="text-align:center; margin-bottom:40px">
+                <button 
+                    v-for="c in autoCategories" 
+                    @click="cur=c" 
+                    :class="['fav-btn', cur==c?'active':'']"
+                    style="margin: 5px; box-shadow: none;"
+                    :style="{ background: cur==c ? '#ff4757' : '#fff', color: cur==c ? '#fff' : '#ff4757' }"
+                >
+                    {{c}}
+                </button>
+            </div>
+
+            <div class="food-grid">
+                <div class="food-card" v-for="item in filteredFoods" :key="item.id" @click="go(item.id)">
+                    <div class="img-container">
+                        <img :src="'../' + item.image">
+                        <span class="tag">{{item.category}}</span>
+                    </div>
+                    <div class="food-info">
+                        <h3>{{ item.name }}</h3>
+                        <span class="price">￥{{ item.price }}</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/data.js"></script>
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    foods: foodList,
+                    cur: '全部'
+                }
+            },
+            computed: {
+                // 【核心逻辑】自动从数据中提取所有不重复的分类名
+                autoCategories() {
+                    const names = this.foods.map(f => f.category);
+                    return ['全部', ...new Set(names)];
+                },
+                // 根据选中的分类进行过滤
+                filteredFoods() {
+                    if (this.cur === '全部') return this.foods;
+                    return this.foods.filter(f => f.category === this.cur);
+                }
+            },
+            methods: {
+                go(id) { window.location.href = `detail.html?id=${id}`; }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

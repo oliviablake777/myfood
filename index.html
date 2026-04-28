@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>美食天下 - 首页</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar">
+            <div class="logo">美食天下</div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">首页</a></li>
+                <li><a href="pages/category.html">分类</a></li>
+                <li><a href="pages/news.html">资讯</a></li>
+                <li><a href="pages/favorites.html">收藏</a></li>
+                <li><a href="pages/feedback.html">反馈</a></li>
+                <li><a href="pages/contact.html">联系</a></li>
+                <li><a href="pages/about.html">关于</a></li>
+                <li><a href="pages/login.html" style="color: #ff4757; font-weight: bold;">登录</a></li>
+            </ul>
+        </nav>
+
+        <header class="hero">
+            <h1>寻味之旅，由此开始</h1>
+            <p>收藏你最喜爱的美味佳肴</p>
+        </header>
+
+        <main class="container">
+            <h2 class="section-title">热门美食推荐</h2>
+            <div class="food-grid">
+                <div class="food-card" v-for="item in foods" :key="item.id">
+                    <div class="img-container" @click="go(item.id)">
+                        <img :src="item.image" alt="">
+                        <span class="tag">{{item.category}}</span>
+                    </div>
+                    <div class="food-info">
+                        <h3 @click="go(item.id)">{{ item.name }}</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                            <span class="price">￥{{ item.price }}</span>
+                            <!-- 收藏按钮 -->
+                            <button class="fav-btn" @click="toggleFav(item)">
+                                {{ isFav(item.id) ? '❤️ 已收藏' : '🤍 收藏' }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>© 2026 美食天下 - 课设</footer>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    foods: foodList,
+                    favIds: JSON.parse(localStorage.getItem('myFavs') || '[]') // 从本地读取已收藏的ID
+                }
+            },
+            methods: {
+                go(id) { window.location.href = `pages/detail.html?id=${id}`; },
+                isFav(id) { return this.favIds.includes(id); },
+                toggleFav(item) {
+                    let index = this.favIds.indexOf(item.id);
+                    if (index > -1) {
+                        this.favIds.splice(index, 1);
+                    } else {
+                        this.favIds.push(item.id);
+                        alert(`已成功收藏: ${item.name}`);
+                    }
+                    // 保存到浏览器缓存
+                    localStorage.setItem('myFavs', JSON.stringify(this.favIds));
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

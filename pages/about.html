@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>关于我们 - 舌尖上的美味</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .about-hero { text-align: center; padding: 60px 0; background: #fff; border-radius: 20px; box-shadow: var(--shadow); margin-bottom: 50px; }
+        .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px; }
+        .about-item { padding: 30px; text-align: center; background: #f8f9fa; border-radius: 15px; transition: var(--transition); }
+        .about-item:hover { background: #fff; box-shadow: var(--shadow); transform: translateY(-5px); }
+        .about-icon { font-size: 40px; margin-bottom: 15px; display: block; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">美食天下</div>
+        <ul class="nav-links">
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="category.html">分类</a></li>
+            <li><a href="news.html">资讯</a></li>
+            <li><a href="favorites.html">收藏</a></li>
+            <li><a href="feedback.html">反馈</a></li>
+            <li><a href="contact.html">联系</a></li>
+            <li><a href="about.html" class="active">关于</a></li>
+            <li><a href="login.html" style="color:#ff4757">登录</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="about-hero">
+            <h1 style="color:var(--primary-color); font-size:40px;">用温度连接美食</h1>
+            <p style="color:#666; margin-top:15px; font-size:18px;">创办于2026年，我们不只是菜谱的搬运工，更是美食文化的守望者。</p>
+            
+            <div class="about-grid">
+                <div class="about-item">
+                    <span class="about-icon">🍳</span>
+                    <h3>精选菜谱</h3>
+                    <p style="font-size:14px; color:#888; margin-top:10px;">每一道菜都经过专业厨师团队测试，确保新手也能成功。</p>
+                </div>
+                <div class="about-item">
+                    <span class="about-icon">🌱</span>
+                    <h3>健康第一</h3>
+                    <p style="font-size:14px; color:#888; margin-top:10px;">标注营养成分，为您的健康饮食保驾护航。</p>
+                </div>
+                <div class="about-item">
+                    <span class="about-icon">❤️</span>
+                    <h3>热爱社区</h3>
+                    <p style="font-size:14px; color:#888; margin-top:10px;">数万名美食爱好者在这里分享生活，交流感悟。</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:flex; gap:50px; align-items:center; margin-top:80px;">
+            <div style="flex:1">
+                <h2 style="margin-bottom:20px;">我们的愿景</h2>
+                <p style="line-height:2; color:#555;">我们相信，厨房是家庭的中心。通过互联网，我们希望将那些快要失传的家乡味道记录下来，让远在他乡的游子也能通过一道菜找回家的感觉。无论你是厨房小白，还是美食达人，这里都有属于你的舞台。</p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" style="flex:1; border-radius:20px; width:400px; height:300px; object-fit:cover;">
+        </div>
+    </main>
+    <footer>© 2026 美食天下 - 发现生活之美</footer>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>美食资讯 - 舌尖上的美味</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .news-header { background: #fff; padding: 40px; border-radius: 20px; margin-bottom: 30px; display: flex; gap: 30px; align-items: center; box-shadow: var(--shadow); }
+        .news-header img { width: 50%; height: 300px; object-fit: cover; border-radius: 15px; }
+        .news-header-info h2 { font-size: 28px; margin-bottom: 15px; color: var(--primary-color); }
+        .news-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; }
+        .news-card { background: #fff; padding: 20px; border-radius: 15px; box-shadow: var(--shadow); transition: var(--transition); }
+        .news-card:hover { transform: translateY(-5px); }
+        .news-tag { background: #eee; color: #666; padding: 3px 10px; border-radius: 5px; font-size: 12px; }
+        .news-date { color: var(--text-grey); font-size: 13px; float: right; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">美食天下</div>
+        <ul class="nav-links">
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="category.html">分类</a></li>
+            <li><a href="news.html" class="active">资讯</a></li>
+            <li><a href="favorites.html">收藏</a></li>
+            <li><a href="feedback.html">反馈</a></li>
+            <li><a href="contact.html">联系</a></li>
+            <li><a href="about.html">关于</a></li>
+            <li><a href="login.html" style="color:#ff4757">登录</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- 头条新闻 -->
+        <div class="news-header">
+            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=800&q=80" alt="头条">
+            <div class="news-header-info">
+                <span class="news-tag">深度专栏</span>
+                <h2>2026年全球饮食趋势报告：从农场到餐桌的透明化</h2>
+                <p style="color:#666;">随着科技的发展，消费者越来越关注食材的来源。我们将深入探讨未来五年的健康饮食走向...</p>
+                <button class="fav-btn" style="margin-top:20px;">阅读全文</button>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom:25px;">最新动态</h3>
+        <div class="news-list">
+            <div class="news-card">
+                <span class="news-tag">探店</span><span class="news-date">2026-04-25</span>
+                <h4 style="margin:15px 0;">藏在弄堂里的私房菜：每天只接三桌</h4>
+                <p style="color:#888; font-size:14px;">这不仅仅是一顿饭，更是一场关于记忆的旅行。主理人张阿姨坚持用最原始的柴火焖饭...</p>
+            </div>
