@@ -2,13 +2,72 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>美食天下 - 首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>美食天下 - 寻味之旅，由此开始</title>
+    <!-- 引入外部样式表 -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- 引入 Vue 3 框架 -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        /* --- 轮播图专属补丁样式 (防止覆盖之前的 style.css) --- */
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            background: #000;
+            overflow: hidden;
+        }
+        .slide-item {
+            position: absolute;
+            width: 100%; height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            z-index: 1;
+        }
+        .slide-item.active { opacity: 1; z-index: 10; }
+        .slide-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6);
+            z-index: -1;
+        }
+        .hero-content h1 { font-size: 3.5rem; margin-bottom: 10px; text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .hero-content p { font-size: 1.2rem; opacity: 0.9; }
+        
+        /* 轮播按钮 */
+        .slide-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(0,0,0,0.3); color: white; border: none;
+            padding: 15px 20px; cursor: pointer; z-index: 30; border-radius: 5px;
+            transition: 0.3s;
+        }
+        .slide-btn:hover { background: #ff4757; }
+        .prev { left: 20px; }
+        .next { right: 20px; }
+
+        /* 小圆点指示器 */
+        .dots {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 10px; z-index: 30;
+        }
+        .dot {
+            width: 12px; height: 12px; background: rgba(255,255,255,0.5);
+            border-radius: 50%; cursor: pointer; transition: 0.3s;
+        }
+        .dot.active { background: #ff4757; width: 30px; border-radius: 10px; }
+    </style>
 </head>
 <body>
     <div id="app">
-        <!-- 导航栏 -->
+        <!-- 1. 导航栏 -->
         <nav class="navbar">
             <div class="logo">美食天下</div>
             <ul class="nav-links">
@@ -18,38 +77,63 @@
                 <li><a href="pages/favorites.html">收藏</a></li>
                 <li><a href="pages/feedback.html">反馈</a></li>
                 <li><a href="pages/contact.html">联系</a></li>
-                <li><a href="pages/about.html">关于</a></li>
+                <li><a href="pages/about.html">关于作者</a></li>
                 <li style="margin-left:15px;"><a href="pages/login.html" style="color:#ff4757; font-weight:bold;">登录</a></li>
             </ul>
         </nav>
 
-        <!-- 课设要求：原生JS编写的时间显示 -->
+        <!-- 2. 实时时间显示 (原生JS实现) -->
         <div id="datetime" style="text-align: right; padding: 10px 8%; background: #fff; font-size: 13px; color: #888; border-bottom: 1px solid #eee;">
-            正在加载时间...
+            📅 正在获取实时时间...
         </div>
 
-        <!-- 课设要求：滚动公告 -->
-        <div style="background: #fff1f2; color: #ff4757; padding: 8px 8%; font-size: 13px;">
-            <marquee scrollamount="6">📢 欢迎来到美食天下！今日推荐 20 款精选菜谱，点击卡片查看详情，收藏你最爱的味道。</marquee>
+        <!-- 3. 滚动公告栏 -->
+        <div style="background: #fff1f2; color: #ff4757; padding: 8px 8%; font-size: 13px; border-bottom: 1px solid #ffebeb;">
+            <marquee scrollamount="6">📢 欢迎来到美食天下！今日新增 20 余款精选美食菜谱，点击卡片可查看详细烹饪步骤，登录后体验更多功能。</marquee>
         </div>
 
-        <header class="hero">
-            <h1>寻味之旅，由此开始</h1>
-            <p>每一份美食都有它的故事</p>
+        <!-- 4. 动态轮播图区域 -->
+        <header class="slider-wrapper">
+            <!-- 轮播内容循环 -->
+            <div v-for="(banner, index) in banners" 
+                 :key="index" 
+                 :class="['slide-item', currentIndex === index ? 'active' : '']">
+                <img :src="banner.image" class="slide-bg">
+                <div class="hero-content">
+                    <h1>{{ banner.title }}</h1>
+                    <p>{{ banner.sub }}</p>
+                </div>
+            </div>
+
+            <!-- 左右切换按钮 -->
+            <button class="slide-btn prev" @click="prevSlide">❮</button>
+            <button class="slide-btn next" @click="nextSlide">❯</button>
+
+            <!-- 小圆点 -->
+            <div class="dots">
+                <div v-for="(banner, index) in banners" 
+                     :key="index" 
+                     :class="['dot', currentIndex === index ? 'active' : '']"
+                     @click="currentIndex = index">
+                </div>
+            </div>
         </header>
 
+        <!-- 5. 美食推荐卡片区域 -->
         <main class="container">
             <h2 class="section-title">热门美食推荐</h2>
             <div class="food-grid">
+                <!-- 使用 Vue 渲染 data.js 里的数据 -->
                 <div class="food-card" v-for="item in foods" :key="item.id">
                     <div class="img-container" @click="go(item.id)">
-                        <img :src="item.image" alt="美食">
+                        <img :src="item.image" alt="美食图片">
                         <span class="tag">{{item.category}}</span>
                     </div>
                     <div class="food-info">
                         <h3 @click="go(item.id)" style="cursor:pointer">{{ item.name }}</h3>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
                             <span class="price">￥{{ item.price }}</span>
+                            <!-- 收藏操作 -->
                             <button class="fav-btn" @click="toggleFav(item)">
                                 {{ isFav(item.id) ? '❤️ 已收藏' : '🤍 收藏' }}
                             </button>
@@ -59,38 +143,75 @@
             </div>
         </main>
 
+        <!-- 6. 页脚 -->
         <footer>
-            <p>© 2026 美食天下 - 你的姓名</p>
+            <p>© 2026 美食天下 Web前端课程设计 - 纯前端动态展示</p>
+            <p style="margin-top: 10px; font-size: 12px; color: #ccc;">姓名：你的名字 | 学号：你的学号</p>
         </footer>
     </div>
 
+    <!-- 引用数据源 -->
     <script src="js/data.js"></script>
+
     <script>
-        // 时间程序
-        function showTime() {
+        // --- 逻辑 A: 原生JS时钟 ---
+        function updateClock() {
             const now = new Date();
             const weeks = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
-            document.getElementById('datetime').innerHTML = "📅 " + now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日 " + weeks[now.getDay()] + " " + now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0') + ":" + now.getSeconds().toString().padStart(2, '0');
+            const timeStr = now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日 " + 
+                            weeks[now.getDay()] + " " + 
+                            now.getHours().toString().padStart(2, '0') + ":" + 
+                            now.getMinutes().toString().padStart(2, '0') + ":" + 
+                            now.getSeconds().toString().padStart(2, '0');
+            const dtElem = document.getElementById('datetime');
+            if (dtElem) dtElem.innerHTML = "📅 当前时间：" + timeStr;
         }
-        setInterval(showTime, 1000);
-        showTime();
+        setInterval(updateClock, 1000);
+        updateClock();
 
-        // Vue 逻辑
+        // --- 逻辑 B: Vue 业务逻辑控制 ---
         const { createApp } = Vue;
         createApp({
             data() {
                 return {
+                    // 美食列表
                     foods: foodList,
-                    favIds: JSON.parse(localStorage.getItem('myFavs') || '[]')
+                    // 收藏 ID 列表 (从本地存储读取)
+                    favIds: JSON.parse(localStorage.getItem('myFavs') || '[]'),
+                    
+                    // 轮播图状态
+                    currentIndex: 0,
+                    banners: [
+                        { title: "寻味之旅，由此开始", sub: "探索 20+ 地道美食菜谱", image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1300" },
+                        { title: "精致甜品，甜蜜生活", sub: "为你开启慵懒的下午茶时光", image: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=1300" },
+                        { title: "美妙食物推荐", sub: "带你攻略世间美食", image: "https://images.unsplash.com/photo-1512058560566-43340348735c?w=1300" }
+                    ]
                 }
             },
+            mounted() {
+                // 开启自动播放：每4秒切换一次
+                setInterval(this.nextSlide, 4000);
+            },
             methods: {
+                // 轮播图方法
+                nextSlide() { this.currentIndex = (this.currentIndex + 1) % this.banners.length; },
+                prevSlide() { this.currentIndex = (this.currentIndex - 1 + this.banners.length) % this.banners.length; },
+                
+                // 详情页跳转
                 go(id) { window.location.href = `pages/detail.html?id=${id}`; },
+                
+                // 收藏夹判断
                 isFav(id) { return this.favIds.includes(id); },
+                
+                // 切换收藏状态
                 toggleFav(item) {
                     let index = this.favIds.indexOf(item.id);
-                    if (index > -1) { this.favIds.splice(index, 1); } 
-                    else { this.favIds.push(item.id); alert('已收藏！'); }
+                    if (index > -1) {
+                        this.favIds.splice(index, 1);
+                    } else {
+                        this.favIds.push(item.id);
+                        alert(`已成功收藏: ${item.name}`);
+                    }
                     localStorage.setItem('myFavs', JSON.stringify(this.favIds));
                 }
             }

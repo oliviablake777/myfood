@@ -1,17 +1,83 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
-    <title>关于我们 - 舌尖上的美味</title>
+    <title>关于作者 - 个人简历</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        .about-hero { text-align: center; padding: 60px 0; background: #fff; border-radius: 20px; box-shadow: var(--shadow); margin-bottom: 50px; }
-        .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px; }
-        .about-item { padding: 30px; text-align: center; background: #f8f9fa; border-radius: 15px; transition: var(--transition); }
-        .about-item:hover { background: #fff; box-shadow: var(--shadow); transform: translateY(-5px); }
-        .about-icon { font-size: 40px; margin-bottom: 15px; display: block; }
+        .resume-header {
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .avatar-box {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid #fff1f2;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.2);
+        }
+
+        .avatar-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .resume-section {
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-h3 {
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            background: #fff1f2;
+            color: var(--primary-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin: 0 5px 10px 0;
+        }
+
+        .timeline-item {
+            padding-left: 20px;
+            border-left: 2px solid #eee;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-color);
+            border-radius: 50%;
+        }
     </style>
 </head>
+
 <body>
     <nav class="navbar">
         <div class="logo">美食天下</div>
@@ -22,43 +88,70 @@
             <li><a href="favorites.html">收藏</a></li>
             <li><a href="feedback.html">反馈</a></li>
             <li><a href="contact.html">联系</a></li>
-            <li><a href="about.html" class="active">关于</a></li>
-            <li><a href="login.html" style="color:#ff4757">登录</a></li>
+            <li><a href="about.html" class="active">关于作者</a></li>
         </ul>
     </nav>
 
     <main class="container">
-        <div class="about-hero">
-            <h1 style="color:var(--primary-color); font-size:40px;">用温度连接美食</h1>
-            <p style="color:#666; margin-top:15px; font-size:18px;">创办于2026年，我们不只是菜谱的搬运工，更是美食文化的守望者。</p>
-            
-            <div class="about-grid">
-                <div class="about-item">
-                    <span class="about-icon">🍳</span>
-                    <h3>精选菜谱</h3>
-                    <p style="font-size:14px; color:#888; margin-top:10px;">每一道菜都经过专业厨师团队测试，确保新手也能成功。</p>
-                </div>
-                <div class="about-item">
-                    <span class="about-icon">🌱</span>
-                    <h3>健康第一</h3>
-                    <p style="font-size:14px; color:#888; margin-top:10px;">标注营养成分，为您的健康饮食保驾护航。</p>
-                </div>
-                <div class="about-item">
-                    <span class="about-icon">❤️</span>
-                    <h3>热爱社区</h3>
-                    <p style="font-size:14px; color:#888; margin-top:10px;">数万名美食爱好者在这里分享生活，交流感悟。</p>
-                </div>
+        <!-- 头部信息 -->
+        <div class="resume-header">
+            <div class="avatar-box">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="头像">
+            </div>
+            <div>
+                <h1 style="font-size: 28px;">苔藓</h1>
+                <p style="color: var(--primary-color); font-weight: bold;">Web 前端开发学习者</p>
+                <p style="color: #888; font-size: 14px; margin-top: 10px;">热爱美食与编码，致力于通过技术发现生活之美。</p>
             </div>
         </div>
 
-        <div style="display:flex; gap:50px; align-items:center; margin-top:80px;">
-            <div style="flex:1">
-                <h2 style="margin-bottom:20px;">我们的愿景</h2>
-                <p style="line-height:2; color:#555;">我们相信，厨房是家庭的中心。通过互联网，我们希望将那些快要失传的家乡味道记录下来，让远在他乡的游子也能通过一道菜找回家的感觉。无论你是厨房小白，还是美食达人，这里都有属于你的舞台。</p>
+        <div style="display: flex; gap: 30px;">
+            <!-- 左侧 -->
+            <div style="flex: 1;">
+                <section class="resume-section">
+                    <h3 class="section-h3">专业技能</h3>
+                    <span class="skill-tag">HTML5 / CSS3</span>
+                    <span class="skill-tag">Vue.js 3.0</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">响应式布局</span>
+                </section>
+
+                <section class="resume-section">
+                    <h3 class="section-h3">教育背景</h3>
+                    <div class="timeline-item">
+                        <h4 style="font-size:15px;">卡洛西亚大学</h4>
+                        <p style="font-size: 13px; color: #999;">2024 - 2028 | 计算机相关专业</p>
+                    </div>
+                </section>
             </div>
-            <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" style="flex:1; border-radius:20px; width:400px; height:300px; object-fit:cover;">
+
+            <!-- 右侧 (精简版项目经验) -->
+            <div style="flex: 1.5;">
+                <section class="resume-section" style="height: 100%;">
+                    <h3 class="section-h3">核心项目</h3>
+                    <div class="timeline-item">
+                        <h4>《舌尖上的美味》推荐网站</h4>
+                        <p style="font-size: 14px; color: #666; margin: 10px 0;">
+                            独立设计的 Web 前端课程设计作品，实现了 10 余个功能页面，支持响应式布局、动态分类筛选及收藏功能。
+                        </p>
+                        <a href="../index.html" class="fav-btn"
+                            style="text-decoration: none; padding: 5px 12px; font-size: 12px;">立即访问项目</a>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <h3 class="section-h3">自我评价</h3>
+                        <p style="font-size: 14px; color: #666; line-height: 1.8;">
+                            具备扎实的前端基础，能够独立解决开发中的布局与交互问题。在本次课设中通过实践深入理解了 Vue 框架的应用，具备良好的学习能力。
+                        </p>
+                    </div>
+                </section>
+            </div>
         </div>
     </main>
-    <footer>© 2026 美食天下 - 发现生活之美</footer>
+
+    <footer>
+        <p>© 2026 由 moss king 制作</p>
+    </footer>
 </body>
+
 </html>
